@@ -4,7 +4,7 @@ It renames the biggest file in the final download folder to the job name.
 
 ##pySabRename vs sabRename
 * pySabRename is written in Python, sabRename is written in C++
-* pySabRename also checks subfolders (I've not seen many spots placing the actual movie in a subfolder, but I've seen them)
+* pySabRename also checks subfolders (I've not seen many spots placing the actual movie in a subfolder, but I've seen them), sabRename doesn't
 * pySabRename is multi OS, sabRename uses Windows.h (not exactly multi OS)
 * pySabRename's py2exe is 4.76MB, sabRename.exe is 15,0kB
 
