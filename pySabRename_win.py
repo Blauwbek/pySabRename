@@ -1,4 +1,5 @@
-#!/usr/local/sabnzbd/env/bin/python
+#! /usr/bin/python
+
 # pySabRename
 # Copyright (C) 2013  Blauwbek
 # 
@@ -61,16 +62,16 @@ def find(dir):
 
 find(final_dir)
 if r_file[1] != -1:
-	print "Found: ", os.path.basename(r_file[0])
+	print 'Found: ', os.path.basename(r_file[0])
 
 old_name = r_file[0]
-print "Old name: ", old_name
+print 'Old name: ', old_name
 
 ext = os.path.splitext(r_file[0])[1]
-print "Found extension! ({})".format(ext)
+print 'Found extention! ({})'.format(ext)
 
-new_file = final_dir+ "/" + job_name + ext
-print "New name: {}".format(new_file)
+new_file = final_dir+ '\\' + job_name + ext
+print 'New name:', format(new_file)
 os.rename(old_name, new_file)
 
 sys.exit(0)
