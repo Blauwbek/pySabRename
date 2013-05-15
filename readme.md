@@ -15,5 +15,4 @@ This program is used in sabnzbd and works really well when using the latest Spot
 This software can be used on any os running python (I might upload a py2exe dist).
 
 ##Todo
-* Never really coded python before, if some more experienced python-coders could review it, that'd be great.
 * Added functionality is always welcome
