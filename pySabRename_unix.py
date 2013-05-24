@@ -68,10 +68,10 @@ old_name = r_file[0]
 print 'Old name: ', old_name
 
 ext = os.path.splitext(r_file[0])[1]
-print 'Found extention! ({})'.format(ext)
+print 'Found extension! ({})'.format(ext)
 
 new_file = final_dir+ '/' + job_name + ext
-print 'New name:', format(new_file)
+print 'New name: ', format(new_file)
 os.rename(old_name, new_file)
 
 sys.exit(0)
