@@ -27,7 +27,10 @@ job_name = sys.argv[3]
 
 #non-sab things
 #largest file so far and size, for use in find(dir)
-r_file = ("", -1)
+r_file = ('', -1)
+
+extlist = ('.mkv', '.avi', '.mp4', '.3gp', '.divx', '.flv', '.mpg', '.m4v', '.mov', '.mpeg', '.swf', '.wmv')
+sublist = ('.idx', '. sub', '.srt')
 
 
 print 'pySabRename\n'
@@ -62,16 +65,31 @@ def find(dir):
 
 find(final_dir)
 if r_file[1] != -1:
-	print 'Found: ', os.path.basename(r_file[0])
+	filename = os.path.basename(r_file[0])
+	print 'Found: ', filename
 
 old_name = r_file[0]
 print 'Old name: ', old_name
 
-ext = os.path.splitext(r_file[0])[1]
-print 'Found extention! ({})'.format(ext)
+filename, ext = os.path.splitext(r_file[0])
+print 'Found extension! ({})'.format(ext)
 
-new_file = final_dir+ '\\' + job_name + ext
-print 'New name:', format(new_file)
-os.rename(old_name, new_file)
+if any(ext == val for val in extlist):
+	new_file = final_dir+ '\\' + job_name + ext
+	print 'New name:', format(new_file)
+	os.rename(old_name, new_file)
+else:
+	print 'This file has an extension that is not supported to prevent wrong renames like multi-file movies (dvds etc.)'
+
+for s_ext in sublist:
+	if os.path.isfile(filename+s_ext):
+		os.rename(filename+s_ext, final_dir+'\\'+job_name+s_ext)
+		print 'We found and renamed a subtitle file with the extension ', s_ext
+
+for item in os.listdir(final_dir):
+	if os.path.isdir(item):
+		if not os.listdir(item):
+			os.rmdir(item)
+			print 'Removed empty folder', item
 
 sys.exit(0)
