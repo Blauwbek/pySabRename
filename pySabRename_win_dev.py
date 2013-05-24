@@ -76,7 +76,7 @@ print 'Found extension! ({})'.format(ext)
 
 if any(ext == val for val in extlist):
 	new_file = final_dir+ '\\' + job_name + ext
-	print 'New name:', format(new_file)
+	print 'New name:', new_file
 	os.rename(old_name, new_file)
 else:
 	print 'This file has an extension that is not supported to prevent wrong renames like multi-file movies (dvds etc.)'
