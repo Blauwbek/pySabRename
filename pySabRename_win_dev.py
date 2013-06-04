@@ -29,7 +29,7 @@ job_name = sys.argv[3]
 #largest file so far and size, for use in find(dir)
 r_file = ('', -1)
 
-extlist = ('.mkv', '.avi', '.mp4', '.3gp', '.divx', '.flv', '.mpg', '.m4v', '.mov', '.mpeg', '.swf', '.wmv')
+extlist = ('.mkv', '.avi', '.mp4', '.3gp', '.divx', '.flv', '.mpg', '.m4v', '.mov', '.mpeg', '.swf', '.wmv', '.iso')
 sublist = ('.idx', '. sub', '.srt')
 
 
@@ -75,11 +75,12 @@ filename, ext = os.path.splitext(r_file[0])
 print 'Found extension! ({})'.format(ext)
 
 if any(ext == val for val in extlist):
+	print 'Extention supported! ', ext
 	new_file = final_dir+ '\\' + job_name + ext
 	print 'New name:', new_file
 	os.rename(old_name, new_file)
 else:
-	print 'This file has an extension that is not supported to prevent wrong renames like multi-file movies (dvds etc.)'
+	print 'This file has an extension that is not supported to prevent wrong renames like multi-file movies (dvds etc.) ', ext
 
 for s_ext in sublist:
 	if os.path.isfile(filename+s_ext):
