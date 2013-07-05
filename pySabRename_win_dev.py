@@ -55,7 +55,7 @@ def find(dir):
 	print "Searching dir: ", dir
 	global r_file
 	for item in os.listdir(dir):
-		item = dir + "/" + item
+		item = dir + "\\" + item
 		if os.path.isdir(item):
 			find(item)
 		else:
