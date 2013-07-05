@@ -55,13 +55,15 @@ def find(dir):
 	print "Searching dir: ", dir
 	global r_file
 	for item in os.listdir(dir):
-		item = dir + "\\" + item
+		item = os.path.join(dir, item)
 		if os.path.isdir(item):
 			find(item)
 		else:
 			itemsize = os.path.getsize(item)
 			if itemsize > r_file[1]:
 				r_file = (item, itemsize)
+
+print "Renaming process"
 
 find(final_dir)
 if r_file[1] != -1:
@@ -76,7 +78,7 @@ print 'Found extension! ({})'.format(ext)
 
 if any(ext == val for val in extlist):
 	print 'Extention supported! ', ext
-	new_file = final_dir+ '\\' + job_name + ext
+	new_file = os.path.join(final_dir, job_name+ext)
 	print 'New name:', new_file
 	os.rename(old_name, new_file)
 else:
@@ -84,7 +86,7 @@ else:
 
 for s_ext in sublist:
 	if os.path.isfile(filename+s_ext):
-		os.rename(filename+s_ext, final_dir+'\\'+job_name+s_ext)
+		os.rename(filename+s_ext, os.path.join(final_dir, job_name+s_ext))
 		print 'We found and renamed a subtitle file with the extension ', s_ext
 
 for item in os.listdir(final_dir):
@@ -92,5 +94,22 @@ for item in os.listdir(final_dir):
 		if not os.listdir(item):
 			os.rmdir(item)
 			print 'Removed empty folder', item
+
+print "Cleaning process"
+
+def cleanup(top):
+	global final_dir, job_name, ext, sublist
+    if(top == '/' or top == "\\"): return
+    else:
+		for root, dirs, files in os.walk(top, topdown=False):
+			for name in files:
+				if not any(os.path.join(root, name) == os.path.join(final_dir, job_name+s_ext) for s_ext in sublist) and not os.path.join(root, name) == os.path.join(final_dir, job_name+ext):
+					os.remove(os.path.join(root, name))
+					print 'Removed: ', os.path.join(root, name)
+			for name in dirs:
+				os.rmdir(os.path.join(root, name))
+				print 'Removed dir: ', os.path.join(root, name)
+
+cleanup(final_dir)
 
 sys.exit(0)
