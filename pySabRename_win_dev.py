@@ -108,8 +108,11 @@ def cleanup(top):
 					os.remove(os.path.join(root, name))
 					print 'Removed: ', os.path.join(root, name)
 			for name in dirs:
-				os.rmdir(os.path.join(root, name))
-				print 'Removed dir: ', os.path.join(root, name)
+				try:
+					os.rmdir(os.path.join(root, name))
+					print 'Removed dir: ', os.path.join(root, name)
+				except:
+					print 'Unable to delete dir: ', os.path.join(root, name)
 
 cleanup(final_dir)
 
