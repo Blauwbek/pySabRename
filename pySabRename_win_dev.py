@@ -30,7 +30,7 @@ job_name = sys.argv[3]
 r_file = ('', -1)
 
 extlist = ('.mkv', '.avi', '.mp4', '.3gp', '.divx', '.flv', '.mpg', '.m4v', '.mov', '.mpeg', '.swf', '.wmv', '.iso')
-sublist = ('.idx', '. sub', '.srt')
+sublist = ('.idx', '.sub', '.srt')
 
 
 print 'pySabRename\n'
@@ -63,7 +63,7 @@ def find(dir):
 			if itemsize > r_file[1]:
 				r_file = (item, itemsize)
 
-print "Renaming process"
+print "\n+Renaming process+"
 
 find(final_dir)
 if r_file[1] != -1:
@@ -95,15 +95,16 @@ for item in os.listdir(final_dir):
 			os.rmdir(item)
 			print 'Removed empty folder', item
 
-print "Cleaning process"
+print "\n+Cleaning process+"
 
 def cleanup(top):
 	global final_dir, job_name, ext, sublist
-    if(top == '/' or top == "\\"): return
-    else:
+	if top == '/' or top == '\\':
+		print 'nope.jpg'
+	else:
 		for root, dirs, files in os.walk(top, topdown=False):
 			for name in files:
-				if not any(os.path.join(root, name) == os.path.join(final_dir, job_name+s_ext) for s_ext in sublist) and not os.path.join(root, name) == os.path.join(final_dir, job_name+ext):
+				if not any(os.path.splitext(name)[1] == s_ext for s_ext in sublist) and not os.path.join(root, name) == os.path.join(final_dir, job_name+ext) and not os.path.splitext(name)[1] == '.nfo':
 					os.remove(os.path.join(root, name))
 					print 'Removed: ', os.path.join(root, name)
 			for name in dirs:
