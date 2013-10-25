@@ -18,6 +18,11 @@
 
 import sys
 import os
+import ConfigParser
+
+#config stuff
+config = ConfigParser.RawConfigParser()
+config.readfp(open(os.path.join(os.path.dirname(sys.argv[0]), 'pySR.cfg')))
 
 #sab things
 #dir the files are we want to use
@@ -32,9 +37,9 @@ job_res = sys.argv[7]
 r_file = ('', -1)
 
 #file extensions, edit at will
-extlist = ('.mkv', '.avi', '.mp4', '.3gp', '.divx', '.flv', '.mpg', '.m4v', '.mov', '.mpeg', '.swf', '.wmv', '.iso')
+extlist = config.get('Static', 'vidext').split(',')
 #subtitle extensions, also open for additions
-sublist = ('.idx', '.sub', '.srt')
+sublist = config.get('Static', 'subext').split(',')
 
 
 print 'pySabRename\n'
@@ -115,6 +120,19 @@ def cleanup(top):
 				except:
 					print 'Unable to delete dir:', os.path.join(root, name)
 
-cleanup(final_dir)
+if config.getboolean('Options', 'cleanup'):
+	cleanup(final_dir)
+
+if config.getboolean('Options', 'sickbeard'):
+	print '\n+Calling Sickbeard+'
+	try:
+		from autoProcessTV import autoProcessTV
+		
+		if len(sys.argv) >= 3:
+			autoProcessTV.processEpisode(final_dir, sys.argv[2])
+		else:
+			autoProcessTV.processEpisode(final_dir)
+	except:
+		print 'Could not run sickbeard, is autoProcessTV in the same folder as this script?'
 
 sys.exit(0)
