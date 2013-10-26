@@ -126,7 +126,7 @@ if config.getboolean('Options', 'cleanup'):
 if config.getboolean('Options', 'sickbeard'):
 	print '\n+Calling Sickbeard+'
 	try:
-		from autoProcessTV import autoProcessTV
+		import autoProcessTV
 		
 		if len(sys.argv) >= 3:
 			autoProcessTV.processEpisode(final_dir, sys.argv[2])
