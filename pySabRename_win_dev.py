@@ -29,6 +29,8 @@ config.readfp(open(os.path.join(os.path.dirname(sys.argv[0]), 'pySR.cfg')))
 final_dir = sys.argv[1]
 #name to rename the biggest file to
 job_name = sys.argv[3]
+#user defined cat
+job_cat = sys.argv[5]
 #job result
 job_res = sys.argv[7]
 
@@ -120,19 +122,21 @@ def cleanup(top):
 				except:
 					print 'Unable to delete dir:', os.path.join(root, name)
 
-if config.getboolean('Options', 'cleanup'):
-	cleanup(final_dir)
+if config.get('sabnzbd', 'moviecat')==job_cat:
+	if config.getboolean('movies', 'cleanup'):
+		cleanup(final_dir)
 
-if config.getboolean('Options', 'sickbeard'):
-	print '\n+Calling Sickbeard+'
-	try:
-		import autoProcessTV
-		
-		if len(sys.argv) >= 3:
+if config.get('sabnzbd', 'tvcat')==job_cat:
+	if config.getboolean('tv', 'cleanup'):
+		cleanup(final_dir)
+
+	if config.getboolean('tv', 'sickbeard'):
+		print '\n+Calling Sickbeard+'
+		try:
+			import autoProcessTV
+			
 			autoProcessTV.processEpisode(final_dir, sys.argv[2])
-		else:
-			autoProcessTV.processEpisode(final_dir)
-	except:
-		print 'Could not run sickbeard, is autoProcessTV in the same folder as this script?'
+		except:
+			print 'Could not run sickbeard, is autoProcessTV in the same folder as this script?'
 
 sys.exit(0)
