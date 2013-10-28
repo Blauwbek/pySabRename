@@ -135,7 +135,10 @@ if config.get('sabnzbd', 'tvcat')==job_cat:
 		try:
 			import autoProcessTV
 			
-			autoProcessTV.processEpisode(final_dir, sys.argv[2])
+			if autoProcessTV.processEpisode.func_code.co_argcount == 2:
+				autoProcessTV.processEpisode(final_dir, sys.argv[2])
+			elif autoProcessTV.processEpisode.func_code.co_argcount == 3:
+				autoProcessTV.processEpisode(final_dir, sys.argv[2], job_res)
 		except:
 			print 'Could not run sickbeard, is autoProcessTV in the same folder as this script?'
 
