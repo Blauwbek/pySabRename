@@ -66,6 +66,7 @@ if int(job_res) != 0:
 	print 'To prevent bad stuff from happening we do not run this script on jobs that are not succesfully completed (par/rar fail)'
 	print 'If you want to run this anyway try this in commandline:'
 	print sys.argv[0], sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7]
+	sys.exit(0)
 
 def find(dir):
 	print "Searching dir: ", dir
