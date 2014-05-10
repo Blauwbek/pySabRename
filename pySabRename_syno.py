@@ -98,6 +98,7 @@ if any(ext == val for val in extlist):
 	os.rename(old_name, new_file)
 else:
 	print 'This file has an extension that is not supported to prevent wrong renames like multi-file movies (dvds etc.):', ext
+	sys.exit(0);
 
 for s_ext in sublist:
 	if os.path.isfile(filename+s_ext):
