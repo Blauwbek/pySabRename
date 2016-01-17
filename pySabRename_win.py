@@ -24,7 +24,7 @@ import subprocess
 #config stuff
 config = ConfigParser.RawConfigParser()
 startfolder = os.path.dirname(sys.argv[0])
-cfgfolder = os.path.join(os.path.dirname(sys.argv[0]), 'par2.exe')
+parexefile = os.path.join(os.path.dirname(sys.argv[0]), 'par2j.exe')
 config.readfp(open(os.path.join(os.path.dirname(sys.argv[0]), 'pySR.cfg')))
 
 #sab things
@@ -83,6 +83,10 @@ if int(job_res) != 0:
 
 par_file = ''
 
+if not os.path.isdir(final_dir):
+	print "Folder not found, exiting : ",final_dir
+	sys.exit(0)
+
 def find_par2(dir):
 	global par_file, r_file
 	for folder, subs, files in os.walk(dir):
@@ -100,20 +104,26 @@ find_par2(final_dir)
 filename, ext = os.path.splitext(r_file[0])
 print 'Found extension! ({})'.format(ext)
 
-if par_file != '':
-	dir_name = os.path.dirname(par_file)
-	print 'processing par2 file ' + par_file
-	p_file = '"' + par_file + '"'
-	R=subprocess.call(['par2.exe','r','-q',par_file,'*'],cwd=dir_name)
-	print 'Par2 Result=',R
-	if R == 0:
-		print 'par2 renaming done.'
-		# get largest file to determine job-name
-		r_file = ['',-1]
-		find_par2 (final_dir)
-		if r_file[1] > 0:
-			job_name, ext = os.path.splitext(os.path.basename(r_file[0]))
-			print "New jobname: " + job_name
+print "Script directory ",startfolder
+
+if os.path.isfile(parexefile):
+	if par_file != '':
+		dir_name = os.path.dirname(par_file)
+		file_name = os.path.basename(par_file)
+		p_file = '"' + par_file + '"'
+		print 'par2j: ' + p_file
+		R=subprocess.call([parexefile,'r '+ p_file,'*'],cwd=dir_name)
+		print 'Par2j Result=',R
+		if R == 16:
+			print 'par2j renaming done.'
+			# get largest file to determine job-name
+			r_file = ['',-1]
+			find_par2 (final_dir)
+			if r_file[1] > 0:
+				job_name, ext = os.path.splitext(os.path.basename(r_file[0]))
+				print "New jobname: " + job_name
+else:
+	print 'par2j.exe not found, skipped par2j renaming'
 
 print "\n+Move / Renaming process+"
 if r_file[1] != -1:
