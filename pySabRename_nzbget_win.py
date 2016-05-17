@@ -133,13 +133,16 @@ if config.get('sabnzbd', 'tvcat')==job_cat:
 
 	if config.getboolean('tv', 'sickbeard'):
 		print '\n+Calling Sickbeard+'
+		
+		nzbname = os.getenv('NZBPP_NZBFILENAME')
+		
 		try:
 			import autoProcessTV
 			
 			if autoProcessTV.processEpisode.func_code.co_argcount == 2:
-				autoProcessTV.processEpisode(final_dir, sys.argv[2])
+				autoProcessTV.processEpisode(final_dir, nzbname)
 			elif autoProcessTV.processEpisode.func_code.co_argcount == 3:
-				autoProcessTV.processEpisode(final_dir, sys.argv[2], job_res)
+				autoProcessTV.processEpisode(final_dir, nzbname, job_res)
 		except:
 			print 'Could not run sickbeard, is autoProcessTV in the same folder as this script?'
 			sys.exit(94)
