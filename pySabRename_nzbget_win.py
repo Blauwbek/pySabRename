@@ -16,6 +16,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#######################################
+### NZBGET POST-PROCESSING SCRIPT   ###
+
+# pySabRename used to be a post-processing script for sabnzbd only, but you are now looking at the NZBGET implementation.
+
+# It renames the biggest file in the final download folder to the job name. It will also rename subtitles and the nfo.
+# After renaming it will clean up the download dir.
+
+### NZBGET POST-PROCESSING SCRIPT   ###
+#######################################
+
 import sys
 import os
 import ConfigParser
