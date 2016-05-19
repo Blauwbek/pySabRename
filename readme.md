@@ -26,4 +26,4 @@ This program is used in sabnzbd and works really well when using the latest Spot
 It will not work as you'd probably like when multiple episodes are downloaded in the same job!
 
 ##Todo
-* Added functionality is always welcome
+* Test with NZBget on all platforms
